@@ -1,6 +1,5 @@
 #Ignore latest Java Version
 $CurrentJavaJRE = 'Java 8 Update 201'
-$LogDir = 'C:\Logs\'
 
 #Get all installed Java programs
 $JavaPackages = Get-WmiObject -Class Win32_InstalledWin32Program | Where-Object { $_.Name -like "Java*" -and $_.Name -ne $CurrentJavaJRE } | Select InstallLocation, Name, MsiProductCode, Version

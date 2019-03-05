@@ -31,7 +31,7 @@ else
 		
 		#Uninstall Java
 		Write-Host "Uninstalling:" $($JavaProgram.Name)
-		Start-Process msiexec.exe "/x $($JavaProgram.MsiProductCode) /qn" -Wait
+		Start-Process msiexec.exe "/x $($JavaProgram.MsiProductCode) /qn /norestart" -Wait
 	}
 	
 	#Cleanup old Java Folders

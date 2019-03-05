@@ -10,7 +10,7 @@ $JavaArgs = '/s INSTALL_SILENT=Enable SPONSORS=0 AUTO_UPDATE=Disable REBOOT=Disa
 #Install Java
 Start-Process $JavaProg $JavaArgs -NoNewWindow -Wait -PassThru
 
-#Wait a further 5 seconds (In testing, the file association didnt work if ran immediatly after Java installtion
+#Wait a further 5 seconds (In testing, the file association didnt work if ran immediatly after Java installtion)
 Start-Sleep -s 5
 
 Write-Host "Setting .jnlp file association to Java 7 U 15 javaws.exe"

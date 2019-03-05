@@ -19,27 +19,31 @@ ForEach ($JavaProgram in $JavaPackages)
 	
 	#Create New Object for Java Location
 	$Path = New-Object PSObject
-	$Path | Add-Member -Type NoteProperty -Name 'InstallLocation' -value $RegistryPath
+	$Path | Add-Member -Type NoteProperty -Name 'InstallLocation' -value $RegistryPath.InstallLocation
 	$Locations += $Path
 	
 	#Uninstall Java
 	Write-Host "Uninstalling:" $($JavaProgram.Name)
+	Write-Host "Location:" $Path.InstallLocation
 	Start-Process msiexec.exe "/x $($JavaProgram.MsiProductCode) /qn" -Wait
-	MD $RegistryPath.InstallLocation
 }
 
 #Cleanup old Java Folders
 ForEach ($Location in $Locations)
 {
 	#CleanUp Java Source Folder after MSIs removed
-	Write-Host "Checking if """$Location.InstallLocation""" needs cleaning up"
-	If ([System.IO.File]::Exists($($Location.InstallLocation)) -and $Location.InstallLocation -ne $($CurrentJavaPackage.InstallLocation))
+	Write-Host "Checking if """$($Location.InstallLocation)""" needs cleaning up"
+	If (Test-Path -Path $Location.InstallLocation)
 	{
-		Remove-Item -LiteralPath $($JavaProgram.InstallLocation) -Force -Recurse
-		Write-Host "Cleaning up Directory:" $($Location.InstallLocation)
+		Write-Host "Found left over folder:"$Location.InstallLocation
+		If ($Location.InstallLocation -ne $CurrentJavaPackage.InstallLocation)
+		{
+			Remove-Item -LiteralPath $Location.InstallLocation -Force -Recurse
+			Write-Host "Cleaning up Directory:" $Location.InstallLocation
+		}
+		else
+		{
+			Write-Host "Directory Cleanup not required for:"$Location.InstallLocation
+		}
 	}
-	else
-	{
-		Write-Host "Directory Cleanup not required for:"$($Location.InstallLocation)
-	}
-}
+}	

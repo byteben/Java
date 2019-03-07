@@ -5,7 +5,7 @@ $LegacyJavaJREToKeep = 'Java 7 Update 15'
 #Get all installed Java programs
 $JavaPackages = Get-WmiObject -Class Win32_InstalledWin32Program | Where-Object { $_.Name -like "Java*" -and $_.Name -ne $CurrentJavaJREToKeep -and $_.Name -ne $LegacyJavaJREToKeep} | Select InstallLocation, Name, MsiProductCode, Version
 
-#Get current Java program
+#Get current Java programs
 $CurrentJavaPackageToKeep = Get-WmiObject -Class Win32_InstalledWin32Program | Where-Object { $_.Name -eq $CurrentJavaJREToKeep } | Select Name, MsiProductCode, Version
 
 $LegacyJavaPackageToKeep = Get-WmiObject -Class Win32_InstalledWin32Program | Where-Object { $_.Name -eq $LegacyJavaJREToKeep } | Select Name, MsiProductCode, Version

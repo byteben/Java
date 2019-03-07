@@ -1,4 +1,4 @@
-#Ignore latest Java Version
+#Ignore Java Versions
 $CurrentJavaJREToKeep = 'Java 8 Update 201'
 $LegacyJavaJREToKeep = 'Java 7 Update 15'
 
